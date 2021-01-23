@@ -1,6 +1,6 @@
 # AuxiunCrypto
 
-# We will be creating a private and public blockchain with fungible (ERC-20), non-fungible tokens (ERC-721) and mult-token (ERC-1155) to revolutionize the way players control their assets in video games.
+# We are creating a private and public blockchain with fungible (ERC-20), non-fungible tokens (ERC-721) and mult-token (ERC-1155) to revolutionize the way players control their assets in video games.
 
 ## Project Scope
 
