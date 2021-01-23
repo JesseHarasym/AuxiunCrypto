@@ -6,13 +6,13 @@
 
 There is two teams working to complete this capstone project: 
 
-Token Standards: Fungible (ERC-20), Non-Fungible tokens (ERC-721) and Mult-Token (ERC-1155)
-
 Our team is creating the private and public blockchain with the standards needed for our tokens. This blockchain will have the capability to create smart contracts (public and private), and interact with an IPFS to help distribute data through the IPLD protocol.
 
 The other team is creating the wallet that is able to hold tokens in our desired standards, and interact with a game or account so it can be used by users. This wallet will need to interact with our private blockchain, as well as the tokenizer that will be a part of our next step.
 
 At the end both teams will work on completing the project by creating a tokenizer with our desired standards. It must have transferring capabilities so that we can move tokens in and out of the wallet, and will have the capabaility to mass product tokens.
+
+Token Standards: Fungible (ERC-20), Non-Fungible tokens (ERC-721) and Mult-Token (ERC-1155)
 
 ## Getting Started
 
