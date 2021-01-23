@@ -2,7 +2,7 @@
 
 # We are creating a private blockchain to revolutionize the way players control their assets in video games.
 
-#### Project Scope
+### Project Scope
 
 There is two teams working to complete this capstone project: 
 
@@ -14,7 +14,7 @@ At the end both teams will work on completing the project by creating a tokenize
 
 Token Standards: Fungible (ERC-20), Non-Fungible tokens (ERC-721) and Mult-Token (ERC-1155)
 
-#### Getting Started
+### Getting Started
 
 You will need to clone this repo to get the source code:
 
