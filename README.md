@@ -1,10 +1,12 @@
 # AuxiunCrypto
 
-# We are creating a private and public blockchain with fungible (ERC-20), non-fungible tokens (ERC-721) and mult-token (ERC-1155) to revolutionize the way players control their assets in video games.
+# We are creating a private blockchain to revolutionize the way players control their assets in video games.
 
 ## Project Scope
 
 There is two teams working to complete this capstone project: 
+
+Token Standards: Fungible (ERC-20), Non-Fungible tokens (ERC-721) and Mult-Token (ERC-1155)
 
 Our team is creating the private and public blockchain with the standards needed for our tokens. This blockchain will have the capability to create smart contracts (public and private), and interact with an IPFS to help distribute data through the IPLD protocol.
 
