@@ -40,7 +40,7 @@ Our Team:
 - Harmanpreet Singh Anand
 
 
-## Built With
+### Built With
 
 - Solidity
 - Go
