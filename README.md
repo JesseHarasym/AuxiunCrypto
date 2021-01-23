@@ -6,7 +6,7 @@
 
 There is two teams working to complete this capstone project: 
 
-Our team is creating the private and public blockchain with the standards needed for our tokens. This blockchain will have the capability to create smart contracts (public and private), and interact with an IPFS to help distribute data through the IPLD protocol.
+Our team is creating the private and public blockchain with the standards needed for our tokens. This blockchain will have the capability to create smart contracts (public and private), and interact with an IPFS to help distribute data through the IPLD protocol. We will also be responsible for publishing our blockchain to the cloud.
 
 The other team is creating the wallet that is able to hold tokens in our desired standards, and interact with a game or account so it can be used by users. This wallet will need to interact with our private blockchain, as well as the tokenizer that will be a part of our next step.
 
