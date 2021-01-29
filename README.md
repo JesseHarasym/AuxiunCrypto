@@ -50,7 +50,6 @@ Team 2:
 ### Built With
 
 - Solidity
-- Go
 - Geth
 - Open Zeppelin
 - IPFS
