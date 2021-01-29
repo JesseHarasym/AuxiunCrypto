@@ -32,12 +32,19 @@ Our final coding sprint is planned to be completed by April 5, 2021.
 
 ### Contributers
 
-Our Team:
+Team 1:
 - Jesse Harasym-Conrod
 - Matthew Green
 - Clark Roda
 - Adam Dyjur-Mclean
 - Harmanpreet Singh Anand
+
+Team 2:
+- Brad Killins
+- Epson Ronquillo
+- Steve Mackidd
+- Andre Abib E Albuquerque
+- Kaelan Croucher
 
 
 ### Built With
