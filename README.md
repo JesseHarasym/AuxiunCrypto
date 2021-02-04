@@ -1,6 +1,6 @@
 # AuxiunCrypto
 
-# We are creating a private blockchain to revolutionize the way players control their assets in video games.
+## We are creating a private blockchain to revolutionize the way players control their assets in video games.
 
 ### Project Scope
 
@@ -21,6 +21,16 @@ You will need to clone this repo to get the source code:
 ```
 git clone https://github.com/JesseHarasym/AuxiunCrypto.git
 ```
+
+If you are planning on using smart contracts, you must make sure that you have the required dependencies, first ensure you're in the SmartContracts folder and then type
+
+``
+npm install
+``
+
+All dependencies in the package.json will be downloaded for you, and you should be ready to go.
+
+Further instructions to interacting with the blockchain can be viewed under the PrivateBlockchain folder.
 
 ### Projects State
 
