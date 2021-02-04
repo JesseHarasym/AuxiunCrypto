@@ -1,8 +1,10 @@
 ### Our AWS connection information
 
 Our Aws Instance Information:
+```
 Public IP: 52.14.197.214
 Port: 8545
+```
 
 Our private blockchains network id: 6565
 
@@ -14,18 +16,22 @@ There are several ports open on our instance for a variety of factors including 
 
 For example, if you wanted to connect our blockchain to MetaMask, then you would use our aws info and network id in order to do this. For example:
 
+```
 RPC URL: http://52.14.197.214:8545
 Chain ID: 6565
+```
 
 #### Truffle
 
 If we wanted to attach this private blockchain to truffle where we handle all of our smart contracts, we could do that by changing the truffle-config.js file under demployment to:
 
+```
 development: {
     host: "52.14.197.214", 
     port: 8545, 
     network_id: "6565", 
 }
+```
 
 ### Conclusion
 
