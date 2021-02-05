@@ -4,7 +4,7 @@
 
 ### Project Scope
 
-There is two teams working to complete this capstone project: 
+There is two teams working to complete this capstone project:
 
 Our team is creating the private and public blockchain with the standards needed for our tokens. This blockchain will have the capability to create smart contracts (public and private), and interact with an IPFS to help distribute data through the IPLD protocol. We will also be responsible for publishing our blockchain to the cloud.
 
