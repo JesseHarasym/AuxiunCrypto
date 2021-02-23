@@ -14,7 +14,7 @@ I will mention some of the basic commands incase you don't know them. To follow 
 
 If for whatever reason you need help getting back to this directory, you can get back from anywhere in the file structure by typing ``cd ~``.
 
-In order to see the files/directories that are available from your current directory you can type``ls`` .
+In order to see the files/directories that are available from your current directory you can type``ls``.
 
 You should see 'auxiun-blockchain' which holds all the data for our private blockchain. Next to change into this directory you should type ``cd auxiun-blockchain``.
 
@@ -97,9 +97,10 @@ This will display what our blockchain considers our default or primary account. 
 - miner.start()
 ```
 You can start mining at any time with this command while connected to the blockchain. Keep in mind that the free AWS instance is not powerful enough to mine, and although it will work sometimes it tends to cause strange issues. Mining is better left to connected nodes hosted on better hardware. This takes an optional parameter for the number of miner threads.
+```
 
 There are a ton more commands, I will add others I find useful over time, but it is easily searchable if you'd like to dig deeper.
-```
+
 
 ### Editing files with vim
 
@@ -115,9 +116,7 @@ To leave vim and discard your changes, so that they aren't saved you must type `
 
 ### Creating files or scripts
 
-It's pretty straightforward to create a file, simple type the touch followed by the name and extension. If there is no extension provided, it will create a directory. For example ``touch 6565-my-script.sh``.
-
-Would create you a script file that can then be added to through vim or through the echo command.
+It's pretty straightforward to create a file, simple type the touch followed by the name and extension. If there is no extension provided, it will create a directory. For example ``touch 6565-my-script.sh`` would create you a script file that can then be added to through vim or through the echo command.
 
 If this is a regular file or directory then this is enough, but if it's meant to be a script then we must let linux know its executable by typing ``chmod a+x ./6565-my-script.sh``.
 
@@ -131,7 +130,7 @@ So I started by covering the file structure that ive created on our instance and
 
 You will see a variety of files and directories listed that you don't see with the normal ls command. I am going to give you a quick overview of an important one which is .ethereum. You may have noticed that when you created an account, it told you the directory in which your private key was stored, which is this directory. 
 
-We will be going into /.ethereum/net6565/keystore. You can traverse through these directories and take a look at their contents if you'd like, but to make it faster you just type ``cd .ethereum/net6565/keystore``
+We will be going into ``/.ethereum/net6565/keystore``. You can traverse through these directories and take a look at their contents if you'd like, but to make it faster you just type ``cd .ethereum/net6565/keystore``
 
 You are now in the main directory that holds all of our private account keys we talked about earlier. You can type ``ls``
 

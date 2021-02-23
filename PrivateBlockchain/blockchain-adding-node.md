@@ -18,8 +18,12 @@ geth --identity “yourIdentity” --init /path_to_folder/6565-genesis.json --da
 2. Let geth know the networkid for our private blockchain, so we can find the network.
 
 ```
-geth --datadir /path_to_your_data_directory/ACPrivateChain --networkid 6565
+geth --datadir /path_to_your_data_directory/Blockchain --networkid 6565
 ```
+
+The network should now start for the first time in your terminal. You can now attach to this in another proccess by doing:
+
+*Note: In windows you must open another command line and attach to write commands, in the AWS instance you can write commands on the same terminal as the host.*
 
 3. In Windows:
 
@@ -49,7 +53,7 @@ The main blockchain enode information for main node is as follows:
 
 You can connect to this node by using the command admin.addPeer(nodeData). For example, to connect to our main node on our AWS instance you can type `` admin.addPeer("enode://c05610f3cfc102a020570fccb50260e117503d73899ccb85fa0dd92651939aaa861dd5687496967a30fdcede961c0a035fb80eff738828e5209dacb2999f02bb@52.14.197.214:30303");``
 
-If it returns true, then the command was ran successfully. This does happen asynchronously, so keep in mind that just because it returned true does not mean it is completely set up and connect yet.
+If it returns true, then the command was ran successfully. This does happen asynchronously, so keep in mind that just because it returned true does not mean it is completely set up and connected yet.
 
 To see if it works correctly, on the main node you just connected to you can type ``admin.peers``
 
