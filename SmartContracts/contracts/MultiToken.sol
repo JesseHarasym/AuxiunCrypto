@@ -6,7 +6,6 @@ import "../node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 contract MultiToken is ERC1155 {
     //hold an array containing each tokens id
     uint256[] public tokenIds;
-
     //constant set as 0 representing its id as the initial fungible token created
     uint256 public constant Coin = 0;
 
@@ -18,7 +17,6 @@ contract MultiToken is ERC1155 {
 
     // SINGLE TOKEN METHODS
     //------------------------------------------
-
     //creates a token, mints it and adds it to our token array list
     function createToken(
         address to,
@@ -28,7 +26,6 @@ contract MultiToken is ERC1155 {
     ) public {
         //mint the new token
         _mint(to, id, amount, data);
-
         //add to our id array
         tokenIds.push(id);
     }
@@ -55,7 +52,6 @@ contract MultiToken is ERC1155 {
 
     // BATCH TOKEN METHODS
     //------------------------------------------
-
     //same as create token but with multiple tokens
     function createBatchTokens(
         address to,
@@ -65,7 +61,6 @@ contract MultiToken is ERC1155 {
     ) public {
         //mint the batch of tokens
         _mintBatch(to, ids, amounts, data);
-
         //add to our id array
         for (uint256 i = 0; i < ids.length; i++) {
             tokenIds.push(ids[i]);

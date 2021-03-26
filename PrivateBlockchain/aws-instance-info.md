@@ -2,7 +2,7 @@
 
 Our Aws Instance Information:
 ```
-Public IP: 52.14.197.214
+Public IP: 18.191.229.39 
 Port: 8545
 ```
 
@@ -17,7 +17,7 @@ There are several ports open on our instance for a variety of factors including 
 For example, if you wanted to connect our blockchain to MetaMask, then you would use our aws info and network id in order to do this. For example:
 
 ```
-RPC URL: http://52.14.197.214:8545
+RPC URL: http://18.191.229.39:8545
 Chain ID: 6565
 ```
 
@@ -27,7 +27,7 @@ If we wanted to attach this private blockchain to truffle where we handle all of
 
 ```
 development: {
-    host: "52.14.197.214", 
+    host: "18.191.229.39 ", 
     port: 8545, 
     network_id: "6565", 
 }

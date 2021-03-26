@@ -44,16 +44,22 @@ module.exports = {
     //
     development: {
       host: "127.0.0.1", // Localhost (default: none)
-      port: 8545, // Standard Ethereum port (default: none)
-      network_id: "*", // Any network (default: none)
+      port: 7545, // Standard Ethereum port (default: none)
+      network_id: "5777", // Any network (default: none)
     },
     //*************** */
     //this is the information needed to connect to our AWS instance hosting the private blockchain
     // development: {
-    //   host: "52.14.197.214", //AWS instances public IP
+    //   host: "18.191.229.39", //AWS instances public IP
     //   port: 8545, //open port for connections
     //   network_id: "6565", //our blockchains private network id
+    //   from: "0xed6d121b337ec94ae89d90994c2fc023fc15490a",
+    //   gas: 5000000,
     // },
+
+    // web3.personal.unlockAccount(web3.personal.listAccounts[0], "69c5c5be", 150000)
+    // eth.getBalance(web3.personal.listAccounts[0])
+
     //*************** */
     // Another network with more advanced options...
     // advanced: {
