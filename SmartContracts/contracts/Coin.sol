@@ -5,9 +5,6 @@ pragma solidity >=0.6.0 <0.8.0;
 import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Coin is ERC20 {
-    //Will hold the that address associated with the user that minting.
-    address public minter;
-
     //Variables for the name, symbol, totalSupply and decimal of the coin.
     //The decimal states how much the coin can be broken down.
     //Totalsupply is will hold the total value of coins in exsistence
@@ -25,7 +22,6 @@ contract Coin is ERC20 {
 
     //Sets the minter the the sender and ran when the smart contract is created.
     constructor() ERC20(_name, _symbol) {
-        minter = msg.sender;
         _decimals = 18;
     }
 
@@ -66,8 +62,12 @@ contract Coin is ERC20 {
     //Sends an amount of exsisting coins from any caller to address
     //Calls the OpenZeppelin ERC20 _transfer function to send coins from the sender the receiver.
     //Emit is to used to genertate the Sent event, which is then stored on the blockchain in a log.
-    function send(address receiver, uint256 amount) public {
-        _transfer(msg.sender, receiver, amount);
-        emit Sent(msg.sender, receiver, amount);
+    function transferTokens(
+        address sender,
+        address receiver,
+        uint256 amount
+    ) public {
+        _transfer(sender, receiver, amount);
+        emit Sent(sender, receiver, amount);
     }
 }
