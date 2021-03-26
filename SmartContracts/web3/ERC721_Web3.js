@@ -1,5 +1,7 @@
 //#region Here we are declaring our variables.
-const Web3 = require("web3"); //Requiring web3.
+var web3 = new Web3(
+  new Web3.providers.HttpProvider("http://18.191.229.39:8545")
+);
 const ganacheNetwork = "http://localhost:8545"; //This is our connection for ganache (Allows for easy testing)
 var web3 = new Web3(Web3.currentProvider || ganacheNetwork); //Setting the connection either to the currentProvider or Ganache.
 
