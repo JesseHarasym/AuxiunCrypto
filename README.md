@@ -1,6 +1,6 @@
 # AuxiunCrypto
 
-## We are creating a private blockchain to revolutionize the way players control their assets in video games.
+# We are creating a private blockchain to revolutionize the way players control their assets in video games.
 
 ### Project Scope
 
