@@ -9,7 +9,7 @@ node_modules
 # testing
 /coverage
 
-/private_blockchain
+# /private_blockchain
 
 # backup
 test_chain.zip
