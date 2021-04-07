@@ -37,11 +37,12 @@ router.route("/new").post(async (req, res) => {
     firstname: Joi.string().min(1).required(),
     lastname: Joi.string().min(1).required(),
     dev: Joi.boolean().required(),
-    companyname: Joi.string().min(1)
+    companyname: Joi.string().allow("")
   });
   const { error } = schema.validate(req.body);
+  console.log(error);
   if (error) return res.status(400).send(error.details[0].message);
-
+  
   //Check database for unique username
   const usernameExist = await User.findOne({
     username: req.body.username

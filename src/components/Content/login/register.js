@@ -27,16 +27,19 @@ export default function LogIn(props) {
   const [firstnameInput, setFirstname] = React.useState("");
   const [lastnameInput, setLastname] = React.useState("");
   const [dev, setDev] = React.useState(false);
+  const [companynameInput, setCompanyname] = React.useState("");
   
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     //console.log("submitted");
     let userInfo = {
       username: usernameInput,
       password: passwordInput,
       firstname: firstnameInput,
       lastname: lastnameInput,
-      dev: dev
+      dev: dev,
+      companyname: companynameInput
     }
     console.log("userInfo", userInfo)
 
@@ -71,6 +74,10 @@ export default function LogIn(props) {
     setDev(event.target.checked);
   }
 
+  const handleCompanyname = (event) => {
+    setCompanyname(event.target.value);
+  }
+
   const handleUnregistered = () => {
     props.handleRegistered();  
   }
@@ -78,6 +85,7 @@ export default function LogIn(props) {
 
   return (
     <div>
+      <form onSubmit={(e) => handleSubmit(e)}>
     <FormGroup>
       <TextField
         variant="filled"
@@ -109,18 +117,29 @@ export default function LogIn(props) {
         onChange={(e) => handleLastname(e)}
         placeholder="last name"
       />
+      <br/>
       <FormControlLabel
         control={<Checkbox checked={dev} onChange={handleDevChange} name="Developer" />}
         label="Developer"
       />
+      {dev &&
+        <TextField
+          id="companyname-register"
+          label="companyname"
+          onChange={(e) => handleCompanyname(e)}
+          placeholder="company name"
+        />
+      }
+      
       
       <br />
        
     </FormGroup>
     <ButtonGroup variant="contained" className={classes.submit}>
-      <Button color="primary" type="submit" onClick={() => handleSubmit()} >Submit</Button>
+      <Button color="primary" type="submit">Submit</Button>
       <Button color="secondary" >Cancel</Button>
     </ButtonGroup>
+    </form>
     <p>Already registered? click <Link component="button" onClick={() => handleUnregistered()}>here</Link></p>
     </div>  
   )

@@ -4,8 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Edit from '@material-ui/icons/Edit';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -26,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
   account: {
     marginRight: 20,
     flexGrow: 1,
+  },
+  accountPopup: {
+    marginLeft: 10,
+    marginRight: 10
   }
 }));
 
 export default function NavBar(props) {
   const classes = useStyles();
+  const {user} = props.user;
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [accAnchorEl, setAccAnchorEl] = React.useState(null);
@@ -123,9 +131,28 @@ export default function NavBar(props) {
                 }}
                 open={accOpen}
                 onClose={handleAccClose}
+                
               >
-                <MenuItem onClick={handleAccClose}>Profile</MenuItem>
-                <MenuItem onClick={handleAccClose}>My account</MenuItem>
+                <Typography variant="body1" className={classes.accountPopup}>User: {user.username}</Typography>
+                <Typography variant="body1" className={classes.accountPopup}>First Name: {user.firstname}</Typography>
+                <Typography variant="body1" className={classes.accountPopup}>Last Name: {user.lastname}</Typography>
+                {user.companyname &&
+                  <Typography variant="body1" className={classes.accountPopup}>Company Name: {user.companyname}</Typography>
+                }
+                <br/>
+                <Button 
+                  size="small" 
+                  color="primary"
+                  startIcon={<Edit />} 
+                  className={classes.accountPopup}
+                >Change Pwd</Button>
+                <br/>
+                <Button 
+                  size="small" 
+                  color="secondary"
+                  startIcon={<ExitToApp />} 
+                  className={classes.accountPopup}
+                >Sign Out</Button>
               </Menu>
             </div>
           )}

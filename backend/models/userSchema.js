@@ -27,6 +27,10 @@ const userSchema = new Schema(
       require: true,
       minLength: 1
     },
+    companyname: {
+      type: String,
+      require: false
+    },
     developer: {
       type: Boolean,
       require: true
