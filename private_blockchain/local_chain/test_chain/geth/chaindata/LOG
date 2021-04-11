@@ -1,20 +1,26 @@
-=============== Mar 29, 2021 (MDT) ===============
-19:39:28.380315 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
-19:39:28.388323 db@open opening
-19:39:28.389324 version@stat F·[] S·0B[] Sc·[]
-19:39:28.396329 db@janitor F·2 G·0
-19:39:28.396329 db@open done T·8.0067ms
-19:39:28.406339 db@close closing
-19:39:28.407339 db@close done T·1.0005ms
-=============== Mar 29, 2021 (MDT) ===============
-19:39:35.825373 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
-19:39:35.826374 version@stat F·[] S·0B[] Sc·[]
-19:39:35.826374 db@open opening
-19:39:35.826374 journal@recovery F·1
-19:39:35.828375 journal@recovery recovering @1
-19:39:35.835382 memdb@flush created L0@2 N·620 S·50KiB "\x02d\xfc..\x19Ba,v428":"\xfe\x88\xcf..H\xef\xcc,v361"
-19:39:35.837384 version@stat F·[1] S·50KiB[50KiB] Sc·[0.25]
-19:39:35.851396 db@janitor F·3 G·0
-19:39:35.851396 db@open done T·25.022ms
-19:41:00.771426 db@close closing
-19:41:00.772428 db@close done T·1.0016ms
+=============== Apr 11, 2021 (MDT) ===============
+13:45:24.151739 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+13:45:24.157778 db@open opening
+13:45:24.166740 version@stat F·[] S·0B[] Sc·[]
+13:45:24.167742 db@janitor F·2 G·0
+13:45:24.168741 db@open done T·10.963ms
+13:45:24.204624 db@close closing
+13:45:24.205627 db@close done T·1.0035ms
+=============== Apr 11, 2021 (MDT) ===============
+13:45:36.418789 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+13:45:36.419791 version@stat F·[] S·0B[] Sc·[]
+13:45:36.419791 db@open opening
+13:45:36.419791 journal@recovery F·1
+13:45:36.424789 journal@recovery recovering @1
+13:45:36.431103 memdb@flush created L0@2 N·620 S·50KiB "\x02d\xfc..\x19Ba,v428":"\xfe\x88\xcf..H\xef\xcc,v361"
+13:45:36.435258 version@stat F·[1] S·50KiB[50KiB] Sc·[0.25]
+13:45:36.451311 db@janitor F·3 G·0
+13:45:36.451311 db@open done T·31.5199ms
+13:45:36.620839 table@compaction range L-1 "a":"b"
+13:45:36.629376 table@compaction L0·1 -> L1·0 S·50KiB Q·626
+13:45:36.634025 table@build created L1@5 N·620 S·50KiB "\x02d\xfc..\x19Ba,v428":"\xfe\x88\xcf..H\xef\xcc,v361"
+13:45:36.634025 version@stat F·[0 1] S·50KiB[0B 50KiB] Sc·[0.00 0.00]
+13:45:36.635645 table@compaction committed F~ S~ Ke·0 D·0 T·6.2684ms
+13:45:36.647155 table@compaction range L-1 "o":"p"
+13:50:31.257539 db@close closing
+13:50:31.258077 db@close done T·537.8µs

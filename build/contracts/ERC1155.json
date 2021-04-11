@@ -28580,8 +28580,8 @@
     "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-10T20:29:56.016Z",
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-04-11T19:47:36.218Z",
   "devdoc": {
     "details": "Implementation of the basic standard multi-token. See https://eips.ethereum.org/EIPS/eip-1155 Originally based on code by Enjin: https://github.com/enjin/erc-1155 _Available since v3.1._",
     "kind": "dev",
