@@ -1,6 +1,7 @@
 const router = require("express").Router();
 // const router = require("./users");
 const erc721 = require("../web3/ERC721_Web3");
+const erc1155 = require("../web3/ERC1155_Web3");
 const AssetsToken = require("../models/assetsTokenSchema.js");
 //const Marketplace = require("../models/marketplaceSchema.js");
 const jwt = require("jsonwebtoken");
@@ -60,18 +61,29 @@ router.route("/asset/list").post(verify, async (req, res) => {
 
 router.route("/assets").get((req, res) => {
   // Return all assets listed in the marketplace
+  let uri;
   AssetsToken.find({ inmarketplace: true })
     .then(async (assets) => {
       //TODO grab ipfs URI from the blockchain token id
       const cidList = [];
       if (assets.length > 0) {
         for (let i = 0; i < assets.length; i++) {
-          const uri = await erc721
-            .getTokenURI(assets[i].token)
-            .then((result) => {
-              return result;
-            })
-            .catch((err) => res.status(400).json("Error: " + err));
+          if (assets.batchtoken == "true") {
+            uri = await erc1155
+              .getTokenURI(assets[i].token)
+              .then((result) => {
+                return result;
+              })
+              .catch((err) => res.status(400).json("Error: " + err));
+          } else {
+            uri = await erc721
+              .getTokenURI(assets[i].token)
+              .then((result) => {
+                return result;
+              })
+              .catch((err) => res.status(400).json("Error: " + err));
+          }
+
           const tokenObject = await catJson(uri);
           tokenObject.tokenId = assets[i].token;
           cidList.push(tokenObject);

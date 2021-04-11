@@ -39,6 +39,7 @@ export default function DevItemForm(props) {
   const classes = useStyles();
   const [singleMulti, setSingleMulti] = React.useState("");
   const [multi, setMulti] = React.useState(false);
+  const [amount, setAmount] = React.useState("");
   const [itemName, setItemName] = React.useState("");
   const [itemDescription, setItemDescription] = React.useState("");
   const [itemPrice, setItemPrice] = React.useState(0);
@@ -48,8 +49,12 @@ export default function DevItemForm(props) {
 
   const handleSelect = (event) => {
     setSingleMulti(event.target.value);
-    if (event.target.value == "Multiple") setMulti(true);
+    if (event.target.value === "Multiple") setMulti(true);
     else setMulti(false);
+  };
+
+  const handleItemAmount = (event) => {
+    setAmount(event.target.value);
   };
 
   const handleItemName = (event) => {
@@ -93,7 +98,8 @@ export default function DevItemForm(props) {
     formData.append("description", itemDescription);
     formData.append("game", itemGame);
     formData.append("price", itemPrice);
-    //formData.append("multi", multi);
+    formData.append("multi", multi);
+    formData.append("amount", amount);
     formData.append("file", itemFile);
 
     const resData = await fetch("http://localhost:5000/api/dev/asset/new", {
@@ -177,6 +183,7 @@ export default function DevItemForm(props) {
             label="Number of Tokens"
             placeholder={100}
             className={classes.input}
+            onChange={(e) => handleItemAmount(e)}
             endAdornment={
               <InputAdornment position="end">Tokens</InputAdornment>
             }

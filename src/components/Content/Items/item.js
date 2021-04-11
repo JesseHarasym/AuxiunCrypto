@@ -112,14 +112,18 @@ export default function Item(props) {
     alert("Selling Item: " + tokenId);
   };
 
-  const handleBuyItem = async (tokenId, authKey) => {
-    const fetchRes = await fetch(`${backendHost}/api/transaction/buy/asset`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json", "auth-token": authKey },
-      body: JSON.stringify({ tokenId })
-    });
-    // console.log(fetchRes);
+  const handleBuyItem = async (tokenId, isBatch, authKey) => {
+    //Include API call here to buy item from blockchain
+    const fetchRes = await fetch(
+      "http://localhost:5000/api/transaction/buy/asset",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json", "auth-token": authKey },
+        body: JSON.stringify({ tokenId, isBatch })
+      }
+    );
+    console.log(fetchRes);
     alert("Buying Item: " + tokenId);
   };
 
@@ -154,7 +158,11 @@ export default function Item(props) {
               className={classes.addSell}
               color="primary"
               onClick={() =>
-                handleBuyItem(props.items.tokenId, props.user.authKey)
+                handleBuyItem(
+                  props.items.tokenId,
+                  props.items.batchtoken,
+                  props.user.authKey
+                )
               }
             >
               <AddCircle />
