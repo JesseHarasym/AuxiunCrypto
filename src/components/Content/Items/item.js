@@ -23,31 +23,31 @@ const ipfsUrl = "http://127.0.0.1:5001/api/v0/";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
-    margin: 10
+    margin: 10,
   },
   media: {
     height: 0,
-    paddingTop: "90%"
+    paddingTop: "90%",
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   addSell: {
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   avatar: {
     //backgroundColor: red[500],
   },
   cardContainer: {
-    height: "500px"
-  }
+    height: "500px",
+  },
 }));
 
 export default function Item(props) {
@@ -60,7 +60,7 @@ export default function Item(props) {
     //Fetch image from IPFS
     fetch(`${ipfsUrl}cat/${props.items.image}`, {
       method: "POST",
-      mode: "cors"
+      mode: "cors",
     })
       // The following ReadableStream function was adapted from the example at:
       // developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams
@@ -81,7 +81,7 @@ export default function Item(props) {
                 return pump();
               });
             }
-          }
+          },
         });
       })
       .then((stream) => new Response(stream))
@@ -103,7 +103,7 @@ export default function Item(props) {
     alert("Selling Item: " + tokenId);
   };
 
-  const handleBuyItem = async (tokenId, authKey) => {
+  const handleBuyItem = async (tokenId, isBatch, authKey) => {
     //Include API call here to buy item from blockchain
     const fetchRes = await fetch(
       "http://localhost:5000/api/transaction/buy/asset",
@@ -111,7 +111,7 @@ export default function Item(props) {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json", "auth-token": authKey },
-        body: JSON.stringify({ tokenId })
+        body: JSON.stringify({ tokenId, isBatch }),
       }
     );
     console.log(fetchRes);
@@ -147,7 +147,11 @@ export default function Item(props) {
               className={classes.addSell}
               color="primary"
               onClick={() =>
-                handleBuyItem(props.items.tokenId, props.user.authKey)
+                handleBuyItem(
+                  props.items.tokenId,
+                  props.items.batchtoken,
+                  props.user.authKey
+                )
               }
             >
               <AddCircle />
@@ -155,7 +159,7 @@ export default function Item(props) {
           )}
           <IconButton
             className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded
+              [classes.expandOpen]: expanded,
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
