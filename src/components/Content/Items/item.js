@@ -19,6 +19,7 @@ import MonetizationOn from "@material-ui/icons/MonetizationOn";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 const ipfsUrl = "http://127.0.0.1:5001/api/v0/";
+const backendHost = "http://localhost:5000";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,22 +100,26 @@ export default function Item(props) {
     setExpanded(!expanded);
   };
 
-  const handleSellItem = (tokenId) => {
+  const handleSellItem = async (tokenId, authKey, itemPrice) => {
+    // console.log(tokenId + "  " + itemPrice);
+    const fetchRes = await fetch(`${backendHost}/api/marketplace/asset/list`, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json", "auth-token": authKey },
+      body: JSON.stringify({ tokenId, itemPrice })
+    });
+    // console.log(fetchRes);
     alert("Selling Item: " + tokenId);
   };
 
   const handleBuyItem = async (tokenId, authKey) => {
-    //Include API call here to buy item from blockchain
-    const fetchRes = await fetch(
-      "http://localhost:5000/api/transaction/buy/asset",
-      {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json", "auth-token": authKey },
-        body: JSON.stringify({ tokenId })
-      }
-    );
-    console.log(fetchRes);
+    const fetchRes = await fetch(`${backendHost}/api/transaction/buy/asset`, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json", "auth-token": authKey },
+      body: JSON.stringify({ tokenId })
+    });
+    // console.log(fetchRes);
     alert("Buying Item: " + tokenId);
   };
 
@@ -138,7 +143,9 @@ export default function Item(props) {
             <IconButton
               className={classes.addSell}
               style={{ color: green[500] }}
-              onClick={() => handleSellItem(props.items.tokenId)}
+              onClick={() =>
+                handleSellItem(props.items.tokenId, props.user.authKey, null)
+              }
             >
               <MonetizationOn />
             </IconButton>
