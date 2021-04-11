@@ -7,16 +7,17 @@ const bcrypt = require("bcryptjs");
 const Joi = require("@hapi/joi");
 const verify = require("./verify-token");
 const erc721 = require("../web3/ERC721_Web3");
+const erc1155 = require("../web3/ERC1155_Web3");
 const AssetsToken = require("../models/assetsTokenSchema");
 
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient("http://localhost:5001");
 const catJson = async (cid) => {
-  let stringified = "";
-  for await (const chunk of ipfs.cat(cid)) {
-    stringified += chunk.toString();
-  }
-  return JSON.parse(stringified);
+    let stringified = "";
+    for await (const chunk of ipfs.cat(cid)) {
+        stringified += chunk.toString();
+    }
+    return JSON.parse(stringified);
 };
 ////
 //
@@ -139,79 +140,93 @@ router.route("/login").post(async (req, res) => {
  * Gets all assets belonging to the currently logged in user
  */
 router.route("/assets").get(verify, async (req, res) => {
-  //TODO
-  console.log("User pk: ", req.user.pk);
+    //TODO
+    console.log("User pk: ", req.user.pk);
 
-  AssetsToken.find()
-    .then(async (assets) => {
-      const cidList = [];
-      if (assets.length > 0) {
-        for (let i = 0; i < assets.length; i++) {
-          const assetOwner = await erc721.ownerOfToken(assets[i].token);
-          if (req.user.pk === assetOwner.toLowerCase()) {
-            const uri = await erc721
-              .getTokenURI(assets[i].token)
-              .then((result) => result)
-              .catch((err) => res.status(400).json("Error: " + err));
-            const tokenObject = await catJson(uri);
-            tokenObject.tokenId = assets[i].token;
-            cidList.push(tokenObject);
-          }
-        }
-      }
-      res.json(cidList);
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+    AssetsToken.find()
+        .then(async (assets) => {
+            const cidList = [];
+            if (assets.length > 0) {
+                for (let i = 0; i < assets.length; i++) {
+
+                    if (assets[i].batchtoken == "true") {
+                        const balance = await erc1155.getBalance(assets[i].token, req.user.pk)
+                        if (balance > 0) {
+                            const uri = await erc1155.getTokenURI(assets[i].token)
+                                .then((result) => result)
+                                .catch((err) => res.status(400).json("Error: " + err));
+                            const tokenObject = await catJson(uri);
+                            tokenObject.tokenId = assets[i].token;
+                            tokenObject.batchtoken = assets[i].batchtoken;
+                            cidList.push(tokenObject);
+                        }
+                    } else {
+                        const assetOwner = await erc721.ownerOfToken(assets[i].token);
+                        if (req.user.pk === assetOwner.toLowerCase()) {
+                            const uri = await erc721
+                                .getTokenURI(assets[i].token)
+                                .then((result) => result)
+                                .catch((err) => res.status(400).json("Error: " + err));
+                            const tokenObject = await catJson(uri);
+                            tokenObject.tokenId = assets[i].token;
+                            cidList.push(tokenObject);
+                        }
+                    }
+                }
+            }
+            res.json(cidList);
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
 });
 
 //! shouldn't the following routes be protected by verify middleware??
 
 // get info for an individual user
 router.route("/:id").get((req, res) => {
-  User.findById(req.params.id)
-    .then((user) => res.json(user))
-    .catch((err) => res.status(400).json("Error: " + err));
+    User.findById(req.params.id)
+        .then((user) => res.json(user))
+        .catch((err) => res.status(400).json("Error: " + err));
 });
 
 //delete a user
 router.route("/:id").delete((req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json("User deleted"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    User.findByIdAndDelete(req.params.id)
+        .then(() => res.json("User deleted"))
+        .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // update info for a user
 router.route("/:id").put(async (req, res) => {
-  const username = req.body.username;
-  const hashPassword = "";
-  if (req.body.password) {
-    //hash the password
-    const salt = await bcrypt.genSalt(10);
-    hashPassword = await bcrypt.hash(req.body.password, salt);
-  }
-  const firstname = req.body.firstname;
-  const lastname = req.body.lastname;
+    const username = req.body.username;
+    const hashPassword = "";
+    if (req.body.password) {
+        //hash the password
+        const salt = await bcrypt.genSalt(10);
+        hashPassword = await bcrypt.hash(req.body.password, salt);
+    }
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
 
-  User.findById(req.params.id)
-    .then((user) => {
-      if (username) user.username = username;
-      if (hashPassword) user.password = hashPassword;
-      if (firstname) user.firstname = firstname;
-      if (lastname) user.lastname = lastname;
+    User.findById(req.params.id)
+        .then((user) => {
+            if (username) user.username = username;
+            if (hashPassword) user.password = hashPassword;
+            if (firstname) user.firstname = firstname;
+            if (lastname) user.lastname = lastname;
 
-      user
-        .save()
-        .then(() => res.json("User updated!"))
+            user
+                .save()
+                .then(() => res.json("User updated!"))
+                .catch((err) => res.status(400).json("Error: " + err));
+        })
         .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // Get all users
 router.route("/").get((req, res) => {
-  User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(400).json("Error: " + err));
+    User.find()
+        .then((users) => res.json(users))
+        .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;

@@ -19,7 +19,7 @@ export default function ItemList(props) {
     )
       .then((res) => res.json())
       .then((data) => data);
-    setItems(fetchedData);
+    if (Array.isArray(fetchedData)) setItems(fetchedData);
     console.log(fetchedData);
   }, []);
 

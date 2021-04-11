@@ -1,12 +1,12 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
-import Link from '@material-ui/core/Link';
-import { makeStyles, Typography, withWidth } from '@material-ui/core';
-import {getUserInfo} from './api';
-import Register from './register';
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import FormGroup from "@material-ui/core/FormGroup";
+import Link from "@material-ui/core/Link";
+import { makeStyles, Typography, withWidth } from "@material-ui/core";
+import { getUserInfo } from "../../../api";
+import Register from "./register";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 20,
     width: 150
   }
-}))
+}));
 
 export default function LogIn(props) {
   const classes = useStyles();
@@ -30,43 +30,44 @@ export default function LogIn(props) {
     let userInfo = {
       username: usernameInput,
       password: passwordInput
-    }
+    };
 
     // call the api to check username and get a response
-    const response = await getUserInfo(userInfo)
-    
+    const response = await getUserInfo(userInfo);
+
     userInfo = {
       response
-    }
+    };
     //console.log("userInfo", userInfo);
     // if successful, change the component view to homepage component and pass userInfo to the App state
     if (response.data.success) props.handleNewUser(userInfo);
     else alert(response.data.message);
-  }
+  };
+
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
-  }
+  };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
-  }
+  };
 
   const handleRegistered = () => {
-    if(unregistered) setUnregistered(false);
+    if (unregistered) setUnregistered(false);
     else setUnregistered(true);
-  }
+  };
 
   return (
     <div className={classes.root}>
-      
-      { unregistered ? 
+      {unregistered ? (
         // registration form
-        <Register 
-          unregistered={unregistered} 
+        <Register
+          unregistered={unregistered}
           handleRegistered={() => handleRegistered()}
-          handleNewUser={props.handleNewUser} />
-        :
+          handleNewUser={props.handleNewUser}
+        />
+      ) : (
         // login form
         <div>
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -98,5 +99,5 @@ export default function LogIn(props) {
         </div>
       }
     </div>
-  )
+  );
 }

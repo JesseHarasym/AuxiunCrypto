@@ -12,7 +12,7 @@ export default function ItemList(props) {
       .then((res) => res.json())
       .then((data) => data);
     console.log("Fetched data: ", fetchedData);
-    setItems(fetchedData);
+    if (Array.isArray(fetchedData)) setItems(fetchedData);
     console.log(fetchedData);
   }, []);
 
