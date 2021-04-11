@@ -35,22 +35,40 @@ export default function Item(props) {
       props.handleUpdateBalance(response.data.newBalance);
   };
 
+  const handleToggleAddItems = () => {
+    props.setToggleAddItems(true);
+  }
+
   return (
     <div>
-      <Typography className={classes.root}>
-        Welcome, {user.username}
-        <br />
-        Balance: {parseFloat(user.coinbalance.toFixed(4))} tokens
-      </Typography>
-      <Button
-        variant="contained"
-        size="large"
-        color="primary"
-        onClick={() => handleBuyTokens()}
-        className={classes.button}
-      >
-        Get More Tokens
-      </Button>
+      
+        <Typography className={classes.root}>
+          Welcome, {user.username}
+          <br />
+          Balance: {parseFloat(user.coinbalance.toFixed(4))} tokens
+        </Typography>
+        { user.developer ? 
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={() => handleToggleAddItems()}
+            className={classes.button}
+          >
+            Add Items
+          </Button> 
+        :
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={() => handleBuyTokens()}
+            className={classes.button}
+          >
+            Get More Tokens
+          </Button>                 
+        }
+      
     </div>
   );
 }

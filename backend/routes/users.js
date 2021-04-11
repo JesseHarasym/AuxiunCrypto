@@ -30,119 +30,110 @@ const catJson = async (cid) => {
 
 //register a new user
 router.route("/new").post(async (req, res) => {
-    //console.log(req.body);
-    //VALIDATE THE REGISTERED INFO
-    const schema = Joi.object({
-        username: Joi.string().min(5).required(),
-        password: Joi.string().min(6).required(),
-        firstname: Joi.string().min(1).required(),
-        lastname: Joi.string().min(1).required(),
-        dev: Joi.boolean().required(),
-        companyname: Joi.string().min(1)
-    });
-    const {
-        error
-    } = schema.validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+  //console.log(req.body);
+  //VALIDATE THE REGISTERED INFO
+  const schema = Joi.object({
+    username: Joi.string().min(5).required(),
+    password: Joi.string().min(6).required(),
+    firstname: Joi.string().min(1).required(),
+    lastname: Joi.string().min(1).required(),
+    dev: Joi.boolean().required(),
+    companyname: Joi.string().allow("")
+  });
+  const { error } = schema.validate(req.body);
+  console.log(error);
+  if (error) return res.status(400).send(error.details[0].message);
+  
+  //Check database for unique username
+  const usernameExist = await User.findOne({
+    username: req.body.username
+  });
+  if (usernameExist) return res.status(400).send("Username already exists");
 
-    //Check database for unique username
-    const usernameExist = await User.findOne({
-        username: req.body.username
-    });
-    if (usernameExist) return res.status(400).send("Username already exists");
+  //hash the password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    //hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
+  //create the user object to be saved to the database
+  const username = req.body.username;
+  const password = hashPassword;
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const developer = req.body.dev;
+  const companyname = req.body.companyname;
 
-    //create the user object to be saved to the database
-    const username = req.body.username;
-    const password = hashPassword;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const developer = req.body.dev;
-    const companyname = req.body.companyname;
+  //TODO create web3 account id object
+  const blockchainAccount = await account
+    .createAccount(password)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 
-    //TODO create web3 account id object
-    const blockchainAccount = await account
-        .createAccount(password)
-        .then((result) => {
-            return result;
-        })
-        .catch((err) => res.status(400).json("Error: " + err));
+  let user = User({
+    username,
+    password,
+    firstname,
+    lastname,
+    developer,
+    companyname,
+    coinbalance: 0,
+    blockchainAccount
+  });
 
-    let user = User({
-        username,
-        password,
-        firstname,
-        lastname,
-        developer,
-        companyname,
-        coinbalance: 0,
-        blockchainAccount
-    });
-
-    user
-        .save()
-        .then(async () => {
-            const userID = await User.findOne({
-                username
-            });
-            //create and assign a web token
-            const token = jwt.sign({
-                    _id: userID._id,
-                    pk: blockchainAccount
-                },
-                process.env.TOKEN_SECRET
-            );
-            newUser = {
-                user,
-                success: true,
-                authKey: token
-            };
-            res.header("auth-token", token).send(newUser);
-        })
-        .catch((err) => res.status(400).json("Error: " + err));
+  user
+    .save()
+    .then(async () => {
+      const userID = await User.findOne({ username });
+      //create and assign a web token
+      const token = jwt.sign(
+        { _id: userID._id, pk: blockchainAccount },
+        process.env.TOKEN_SECRET
+      );
+      newUser = {
+        user,
+        success: true,
+        authKey: token
+      };
+      res.header("auth-token", token).send(newUser);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 //login
 router.route("/login").post(async (req, res) => {
-    //VALIDATE THE REGISTERED INFO
-    console.log("request", req.body);
-    const schema = Joi.object({
-        username: Joi.string().min(3).required(),
-        password: Joi.string().min(7).required()
-    });
-    const {
-        error
-    } = schema.validate(req.body);
+  //VALIDATE THE REGISTERED INFO
+  console.log("request", req.body);
+  const schema = Joi.object({
+    username: Joi.string().min(5).required(),
+    password: Joi.string().min(6).required()
+  });
+  const { error } = schema.validate(req.body);
 
-    if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
 
-    //Check database for login username
-    const user = await User.findOne({
-        username: req.body.username
-    });
-    if (!user) return res.status(400).send("Username does not exist");
-    //password is correct
-    const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send("Invalid password");
+  //Check database for login username
+  const user = await User.findOne({
+    username: req.body.username
+  });
+  if (!user) return res.status(400).send("Username does not exist");
+  //password is correct
+  const validPass = await bcrypt.compare(req.body.password, user.password);
+  if (!validPass) return res.status(400).send("Invalid password");
 
-    //create and assign a web token
-    const token = jwt.sign({
-            _id: user._id,
-            pk: user.blockchainAccount
-        },
-        process.env.TOKEN_SECRET
-    );
-    const newUser = {
-        user,
-        authKey: token,
-        success: true
-    };
-    res.header("auth-token", token).send(newUser);
+  //create and assign a web token
+  const token = jwt.sign(
+    { _id: user._id, pk: user.blockchainAccount },
+    process.env.TOKEN_SECRET
+  );
+  const newUser = {
+    user,
+    authKey: token,
+    success: true
+  };
+  res.header("auth-token", token).send(newUser);
 
-    //res.send('Logged in');
+  //res.send('Logged in');
 });
 
 /**

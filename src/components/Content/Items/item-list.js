@@ -18,7 +18,7 @@ export default function ItemList(props) {
 
   return (
     <div>
-      {items.length ? (
+      {items.length ?
         items.map((item) => (
           <Item
             key={item.image}
@@ -27,9 +27,9 @@ export default function ItemList(props) {
             user={props.user}
           />
         ))
-      ) : (
+      :
         <p>No Items</p>
-      )}
+      }
     </div>
   );
 }

@@ -146,6 +146,7 @@ export default function Item(props) {
           {props.home ? (
             <IconButton
               className={classes.addSell}
+              //disabled={item.inMarketPlace}
               style={{ color: green[500] }}
               onClick={() =>
                 handleSellItem(props.items.tokenId, props.user.authKey, null)

@@ -27,17 +27,22 @@ export default function LogIn(props) {
   const [firstnameInput, setFirstname] = React.useState("");
   const [lastnameInput, setLastname] = React.useState("");
   const [dev, setDev] = React.useState(false);
+  const [companynameInput, setCompanyname] = React.useState("");
 
-  const handleSubmit = async () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     //console.log("submitted");
     let userInfo = {
       username: usernameInput,
       password: passwordInput,
       firstname: firstnameInput,
       lastname: lastnameInput,
-      dev: dev
-    };
-    console.log("userInfo", userInfo);
+      dev: dev,
+      companyname: companynameInput
+    }
+    console.log("userInfo", userInfo)
+
 
     const response = await saveUserInfo(userInfo);
     //console.log("handleSubmit2", response);
@@ -69,68 +74,72 @@ export default function LogIn(props) {
     setDev(event.target.checked);
   };
 
+  const handleCompanyname = (event) => {
+    setCompanyname(event.target.value);
+  }
+
   const handleUnregistered = () => {
     props.handleRegistered();
   };
 
   return (
     <div>
-      <FormGroup>
+      <form onSubmit={(e) => handleSubmit(e)}>
+    <FormGroup>
+      <TextField
+        variant="filled"
+        id="username-register"
+        label="username"
+        onChange={(e) => handleUsername(e)}
+        placeholder="username"
+      />
+      <br />
+      <TextField
+        variant="filled"
+        id="password-register"
+        type="password"
+        label="password"
+        onChange={(e) => handlePassword(e)}
+        placeholder="password"
+      />
+      <br />
+      <TextField
+        id="firstname-register"
+        label="firstname"
+        onChange={(e) => handleFirstname(e)}
+        placeholder="first name"
+      />
+      <br />
+      <TextField
+        id="lastname-register"
+        label="lastname"
+        onChange={(e) => handleLastname(e)}
+        placeholder="last name"
+      />
+      <br/>
+      <FormControlLabel
+        control={<Checkbox checked={dev} onChange={handleDevChange} name="Developer" />}
+        label="Developer"
+      />
+      {dev &&
         <TextField
-          variant="filled"
-          id="username-register"
-          label="username"
-          onChange={(e) => handleUsername(e)}
-          placeholder="username"
+          id="companyname-register"
+          label="companyname"
+          onChange={(e) => handleCompanyname(e)}
+          placeholder="company name"
         />
-        <br />
-        <TextField
-          variant="filled"
-          id="password-register"
-          type="password"
-          label="password"
-          onChange={(e) => handlePassword(e)}
-          placeholder="password"
-        />
-        <br />
-        <TextField
-          id="firstname-register"
-          label="firstname"
-          onChange={(e) => handleFirstname(e)}
-          placeholder="first name"
-        />
-        <br />
-        <TextField
-          id="lastname-register"
-          label="lastname"
-          onChange={(e) => handleLastname(e)}
-          placeholder="last name"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={dev}
-              onChange={handleDevChange}
-              name="Developer"
-            />
-          }
-          label="Developer"
-        />
-
-        <br />
-      </FormGroup>
-      <ButtonGroup variant="contained" className={classes.submit}>
-        <Button color="primary" type="submit" onClick={() => handleSubmit()}>
-          Submit
-        </Button>
-        <Button color="secondary">Cancel</Button>
-      </ButtonGroup>
-      <p>
-        Already registered? click{" "}
-        <Link component="button" onClick={() => handleUnregistered()}>
-          here
-        </Link>
-      </p>
-    </div>
-  );
+      }
+      
+      
+      <br />
+       
+    </FormGroup>
+    <ButtonGroup variant="contained" className={classes.submit}>
+      <Button color="primary" type="submit">Submit</Button>
+      <Button color="secondary" >Cancel</Button>
+    </ButtonGroup>
+    </form>
+    <p>Already registered? click <Link component="button" onClick={() => handleUnregistered()}>here</Link></p>
+    </div>  
+  )
 }
