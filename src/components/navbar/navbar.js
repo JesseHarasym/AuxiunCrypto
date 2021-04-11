@@ -74,6 +74,9 @@ export default function NavBar(props) {
     setAccAnchorEl(null);
   };
 
+  const handleSignout = (event) => {
+    window.location.reload();
+  };
   
 
 
@@ -152,6 +155,7 @@ export default function NavBar(props) {
                   color="secondary"
                   startIcon={<ExitToApp />} 
                   className={classes.accountPopup}
+                  onClick={handleSignout}
                 >Sign Out</Button>
               </Menu>
             </div>

@@ -108,6 +108,10 @@ export default function DevItemForm(props) {
     console.log(resData);
   };
 
+  const handleToggleAddItems = () => {
+    props.setToggleAddItems(false);
+  }
+
   return (
     <div className={classes.root}>
       <Typography variant="h2" component="h2">
@@ -187,7 +191,7 @@ export default function DevItemForm(props) {
           <Button color="primary" type="submit" onClick={() => handleSubmit()}>
             Submit
           </Button>
-          <Button color="secondary">Cancel</Button>
+          <Button color="secondary" onClick={() => handleToggleAddItems()}>Cancel</Button>
         </ButtonGroup>
         <br />
       </FormGroup>

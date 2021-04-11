@@ -104,8 +104,8 @@ router.route("/login").post(async (req, res) => {
   //VALIDATE THE REGISTERED INFO
   console.log("request", req.body);
   const schema = Joi.object({
-    username: Joi.string().min(3).required(),
-    password: Joi.string().min(7).required()
+    username: Joi.string().min(5).required(),
+    password: Joi.string().min(6).required()
   });
   const { error } = schema.validate(req.body);
 

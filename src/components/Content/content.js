@@ -1,3 +1,4 @@
+import React from "react";
 import ItemList from "./Items/item-list";
 import MarketPlace from "./marketplace/marketplace";
 import Balance from "./balance/balance";
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Content(props) {
   const classes = useStyles();
+  const [ToggleAddItems, setToggleAddItems] = React.useState(false);
 
   return (
     <div>
@@ -42,19 +44,15 @@ export default function Content(props) {
             )
           }
           <Grid item xs={6}>
-            {
-              // is user or developer?
-              // if user, display balance on right side
-              // if developer, display add item form
-              props.user.user.developer ? (
-                <DevItemForm user={props.user}></DevItemForm>
-              ) : (
-                <Balance
-                  user={props.user}
-                  handleUpdateBalance={props.handleUpdateBalance}
-                ></Balance>
-              )
-            }
+          { ToggleAddItems ?
+            <DevItemForm user={props.user} handleUpdateBalance={props.handleUpdateBalance} setToggleAddItems={setToggleAddItems}></DevItemForm>
+          :
+            <Balance
+              user={props.user}
+              handleUpdateBalance={props.handleUpdateBalance}
+              setToggleAddItems={setToggleAddItems}
+            ></Balance>  
+          }  
           </Grid>
         </Grid>
       ) : (
