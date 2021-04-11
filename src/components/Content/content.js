@@ -44,9 +44,13 @@ export default function Content(props) {
             )
           }
           <Grid item xs={6}>
+          
+        
           { ToggleAddItems ?
+          //display the Add Items form when the Add Items Button is clicked
             <DevItemForm user={props.user} handleUpdateBalance={props.handleUpdateBalance} setToggleAddItems={setToggleAddItems}></DevItemForm>
           :
+          //Otherwise display the balance. Balance will be the default and cannot be toggled if the user is not a developer
             <Balance
               user={props.user}
               handleUpdateBalance={props.handleUpdateBalance}
