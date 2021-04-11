@@ -1,22 +1,20 @@
-import React from 'react';
-import './App.css';
-import NavBar from './components/navbar/navbar';
-import Content from './components/Content/content';
+import React from "react";
+import "./App.css";
+import NavBar from "./components/navbar/navbar";
+import Content from "./components/Content/content";
 
 function App() {
   const [loggedIn, setLoginStatus] = React.useState(false);
   const [user, setUser] = React.useState([]);
   const [home, setHome] = React.useState(true);
-  
 
   const handleNewUser = (userInfo) => {
-    
-    setUser(userInfo.response.data)
+    setUser(userInfo.response.data);
     setLoginStatus(true);
-  }
+  };
 
   const handleUpdateBalance = (newBalance) => {
-    console.log("newBalance", newBalance)
+    console.log("newBalance", newBalance);
     const updatedUser = {
       user: {
         authKey: user.authKey,
@@ -32,44 +30,36 @@ function App() {
           username: user.user.username
         }
       }
-    }
+    };
     setUser(updatedUser.user);
-  }
-    // setUser([{userInfo: {
-    //   response: {
-    //     data: {
-    //       user: {
-    //         coinbalance: newBalance
-    //       }
-    //     }
-    //   }    
-    // }}])
-  
+  };
 
   //toggles between Home and Marketplace
   const handleSetHome = () => {
     setHome(true);
-  }
+  };
 
   const handleSetMarketplace = () => {
     setHome(false);
-  }
+  };
 
   return (
     <div className="App">
-      <NavBar 
-        user={user} 
-        loggedIn={loggedIn} 
+      <NavBar
+        user={user}
+        loggedIn={loggedIn}
         handleSetHome={() => handleSetHome()}
-        handleSetMarketplace={() => handleSetMarketplace()}></NavBar>
+        handleSetMarketplace={() => handleSetMarketplace()}
+      ></NavBar>
       <br />
-      <Content 
+      <Content
         handleNewUser={(userInfo) => handleNewUser(userInfo)}
-        handleUpdateBalance={(newBalance) => handleUpdateBalance(newBalance)} 
-        user={user} 
+        handleUpdateBalance={(newBalance) => handleUpdateBalance(newBalance)}
+        user={user}
         loggedIn={loggedIn}
         home={home}
-        handleSetHome={() => handleSetHome}/>  
+        handleSetHome={() => handleSetHome}
+      />
     </div>
   );
 }

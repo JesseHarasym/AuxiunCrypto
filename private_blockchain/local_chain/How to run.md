@@ -28,5 +28,4 @@ personal.unlockAccount("0xfe005d002767a320c45f4d2387bdfa1e5134646e","summer2", 0
 Step 5: Start mining by running 
 miner.start()
 
-
 We don’t need to deploy and record the addresses of the contracts, unless we have remade our blockchain.
