@@ -19,35 +19,36 @@ import MonetizationOn from "@material-ui/icons/MonetizationOn";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 const ipfsUrl = "http://127.0.0.1:5001/api/v0/";
+const backendHost = "http://localhost:5000";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
-    margin: 10,
+    margin: 10
   },
   media: {
     height: 0,
-    paddingTop: "90%",
+    paddingTop: "90%"
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: "rotate(180deg)",
+    transform: "rotate(180deg)"
   },
   addSell: {
-    marginLeft: "auto",
+    marginLeft: "auto"
   },
   avatar: {
     //backgroundColor: red[500],
   },
   cardContainer: {
-    height: "500px",
-  },
+    height: "500px"
+  }
 }));
 
 export default function Item(props) {
@@ -60,7 +61,7 @@ export default function Item(props) {
     //Fetch image from IPFS
     fetch(`${ipfsUrl}cat/${props.items.image}`, {
       method: "POST",
-      mode: "cors",
+      mode: "cors"
     })
       // The following ReadableStream function was adapted from the example at:
       // developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams
@@ -81,7 +82,7 @@ export default function Item(props) {
                 return pump();
               });
             }
-          },
+          }
         });
       })
       .then((stream) => new Response(stream))
@@ -99,7 +100,15 @@ export default function Item(props) {
     setExpanded(!expanded);
   };
 
-  const handleSellItem = (tokenId) => {
+  const handleSellItem = async (tokenId, authKey, itemPrice) => {
+    // console.log(tokenId + "  " + itemPrice);
+    const fetchRes = await fetch(`${backendHost}/api/marketplace/asset/list`, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json", "auth-token": authKey },
+      body: JSON.stringify({ tokenId, itemPrice })
+    });
+    // console.log(fetchRes);
     alert("Selling Item: " + tokenId);
   };
 
@@ -111,7 +120,7 @@ export default function Item(props) {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json", "auth-token": authKey },
-        body: JSON.stringify({ tokenId, isBatch }),
+        body: JSON.stringify({ tokenId, isBatch })
       }
     );
     console.log(fetchRes);
@@ -138,7 +147,9 @@ export default function Item(props) {
             <IconButton
               className={classes.addSell}
               style={{ color: green[500] }}
-              onClick={() => handleSellItem(props.items.tokenId)}
+              onClick={() =>
+                handleSellItem(props.items.tokenId, props.user.authKey, null)
+              }
             >
               <MonetizationOn />
             </IconButton>
@@ -159,7 +170,7 @@ export default function Item(props) {
           )}
           <IconButton
             className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
+              [classes.expandOpen]: expanded
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
