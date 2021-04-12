@@ -18,6 +18,7 @@ import AddCircle from "@material-ui/icons/AddCircle";
 import MonetizationOn from "@material-ui/icons/MonetizationOn";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { json } from "body-parser";
 const ipfsUrl = "http://127.0.0.1:5001/api/v0/";
 const backendHost = "http://localhost:5000";
 
@@ -112,7 +113,7 @@ export default function Item(props) {
     alert("Selling Item: " + tokenId);
   };
 
-  const handleBuyItem = async (tokenId, isBatch, authKey) => {
+  const handleBuyItem = async (tokenId, authKey) => {
     //Include API call here to buy item from blockchain
     const fetchRes = await fetch(
       "http://localhost:5000/api/transaction/buy/asset",
@@ -120,11 +121,12 @@ export default function Item(props) {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json", "auth-token": authKey },
-        body: JSON.stringify({ tokenId, isBatch })
+        body: JSON.stringify({ tokenId })
       }
-    );
+    ).then((res) => res.json());
     console.log(fetchRes);
-    alert("Buying Item: " + tokenId);
+    alert(fetchRes.msg);
+    props.handleUpdateBalance(fetchRes.newBalance);
   };
 
   return (
@@ -137,37 +139,62 @@ export default function Item(props) {
           title={props.items.description}
         />
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
+          <Typography variant="body2">
+            ${props.items.price.toFixed(2)}
+          </Typography>
           {props.home ? (
-            <IconButton
-              className={classes.addSell}
-              //disabled={item.inMarketPlace}
-              style={{ color: green[500] }}
-              onClick={() =>
-                handleSellItem(props.items.tokenId, props.user.authKey, null)
-              }
-            >
-              <MonetizationOn />
-            </IconButton>
+            props.items.inmarketplace ? (
+              <IconButton
+                className={classes.addSell}
+                disabled
+                color="default"
+                onClick={() =>
+                  handleSellItem(props.items.tokenId, props.user.authKey, null)
+                }
+              >
+                <MonetizationOn />
+              </IconButton>
+            ) : (
+              <React.Fragment>
+                <IconButton
+                  className={classes.addSell}
+                  style={{ color: green[500] }}
+                  onClick={() =>
+                    handleSellItem(
+                      props.items.tokenId,
+                      props.user.authKey,
+                      null
+                    )
+                  }
+                >
+                  <MonetizationOn />
+                </IconButton>
+
+                {props.items.numOwned ? (
+                  <Typography variant="body2">
+                    Owned: {props.items.numOwned}
+                  </Typography>
+                ) : null}
+              </React.Fragment>
+            )
           ) : (
-            <IconButton
-              className={classes.addSell}
-              color="primary"
-              onClick={() =>
-                handleBuyItem(
-                  props.items.tokenId,
-                  props.items.batchtoken,
-                  props.user.authKey
-                )
-              }
-            >
-              <AddCircle />
-            </IconButton>
+            <React.Fragment>
+              <IconButton
+                className={classes.addSell}
+                color="primary"
+                onClick={() =>
+                  handleBuyItem(props.items.tokenId, props.user.authKey)
+                }
+              >
+                <AddCircle />
+              </IconButton>
+
+              {props.items.batchBalance ? (
+                <Typography variant="body2">
+                  Items Left: {props.items.batchBalance}
+                </Typography>
+              ) : null}
+            </React.Fragment>
           )}
           <IconButton
             className={clsx(classes.expand, {

@@ -36,6 +36,16 @@ const saveUserInfo = async (data) => {
     });
 };
 
+const fetchUserItems = async (authKey) => {
+  const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
+    headers: { "auth-token": authKey }
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+  console.log("Fetched data: ", fetchedData);
+  return fetchedData;
+};
+
 // receives data: { coinAmount, authKey }
 const buyTokens = async (data) => {
   //console.log("data", data);
@@ -56,4 +66,4 @@ const buyTokens = async (data) => {
     });
 };
 
-export { getUserInfo, saveUserInfo, buyTokens };
+export { getUserInfo, saveUserInfo, buyTokens, fetchUserItems };

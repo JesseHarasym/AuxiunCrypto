@@ -44,7 +44,6 @@ export default function LogIn(props) {
     else alert(response.data.message);
   };
 
-
   const handleUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -70,34 +69,40 @@ export default function LogIn(props) {
       ) : (
         // login form
         <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <FormGroup>
-            <TextField
-              id="username-input"
-              label="username"
-              onChange={(e) => handleUsername(e)}
-              placeholder="username"
-            />
-            <br />
-            <TextField
-              id="password-input"
-              type="password"
-              label="password"
-              onChange={(e) => handlePassword(e)}
-              placeholder="password"
-            />
-            <br />
-            <ButtonGroup variant="contained" className={classes.submit}>
-              <Button color="primary" type="submit">Submit</Button>
-              <Button color="secondary">Cancel</Button>
-            </ButtonGroup>
-            <br />
-            
-          </FormGroup>
-        </form>
-        <div>Not yet registered? click <Link component="button" onClick={() => handleRegistered()}>here</Link></div>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <FormGroup>
+              <TextField
+                id="username-input"
+                label="username"
+                onChange={(e) => handleUsername(e)}
+                placeholder="username"
+              />
+              <br />
+              <TextField
+                id="password-input"
+                type="password"
+                label="password"
+                onChange={(e) => handlePassword(e)}
+                placeholder="password"
+              />
+              <br />
+              <ButtonGroup variant="contained" className={classes.submit}>
+                <Button color="primary" type="submit">
+                  Submit
+                </Button>
+                <Button color="secondary">Cancel</Button>
+              </ButtonGroup>
+              <br />
+            </FormGroup>
+          </form>
+          <div>
+            Not yet registered? click{" "}
+            <Link component="button" onClick={() => handleRegistered()}>
+              here
+            </Link>
+          </div>
         </div>
-      }
+      )}
     </div>
   );
 }
