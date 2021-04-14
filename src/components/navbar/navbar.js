@@ -102,7 +102,7 @@ export default function NavBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleHome}>Home</MenuItem>
+                <MenuItem onClick={handleHome}>Wallet</MenuItem>
                 <MenuItem onClick={handleMarketplace}>Marketplace</MenuItem>
               </Menu>
           <Typography variant = "h6" className={classes.title}>
