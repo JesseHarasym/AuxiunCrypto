@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, responsiveFontSizes } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { buyTokens } from "../login/api";
+import { buyTokens } from "../../../api";
 
 const useStyles = makeStyles((theme) => ({
   root: {

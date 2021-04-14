@@ -1,3 +1,4 @@
+const { TurnedIn } = require("@material-ui/icons");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -7,7 +8,6 @@ const assetstokenSchema = new Schema(
     token: {
       type: Number,
       require: true,
-      unique: true,
       trim: true
     },
     inmarketplace: {
@@ -24,9 +24,11 @@ const assetstokenSchema = new Schema(
       type: Date,
       require: false,
       minimum: 2020
+    },
+    batchtoken:{
+      type: Boolean,
+      require: true
     }
-
-    // details object
   },
   {
     timestamps: true
