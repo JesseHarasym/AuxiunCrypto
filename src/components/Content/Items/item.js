@@ -138,7 +138,7 @@ export default function Item(props) {
             <IconButton
               className={classes.addSell}
               //disabled={item.inMarketPlace}
-              style={{ color: green[500] }}
+              color=""
               onClick={() => handleSellItem(props.items.tokenId)}
             >
               <MonetizationOn />
