@@ -134,9 +134,7 @@ router.route("/asset").post(verify, async (req, res) => {
         //Grabbing the owner of the token.
         owner = await erc721
           .ownerOfToken(asset.token)
-          .then((result) => {
-            return result.toLowerCase();
-          })
+          .then((result) => result.toLowerCase())
           .catch((err) =>
             res.status(500).json({
               success: false,
