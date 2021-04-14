@@ -78,21 +78,6 @@ export default function DevItemForm(props) {
   };
 
   const handleSubmit = async () => {
-    // call to the api goes here
-    // I have created an api.js file that will contain
-    // all the outgoing api calls
-    // you can reference login.js to see how that is done.
-
-    // const body = {
-    //   name: itemName,
-    //   description: itemDescription,
-    //   game: itemGame,
-    //   price: itemPrice,
-    //   file: itemFile
-    // };
-
-    // console.log(body.file);
-
     const formData = new FormData();
     formData.append("name", itemName);
     formData.append("description", itemDescription);
@@ -101,7 +86,7 @@ export default function DevItemForm(props) {
     formData.append("multi", multi);
     formData.append("amount", amount);
     formData.append("file", itemFile);
-
+    console.log(formData);
     const resData = await fetch("http://localhost:5000/api/dev/asset/new", {
       method: "POST",
       headers: { "auth-token": authKey },
@@ -116,7 +101,7 @@ export default function DevItemForm(props) {
 
   const handleToggleAddItems = () => {
     props.setToggleAddItems(false);
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -169,7 +154,6 @@ export default function DevItemForm(props) {
             label="Image Upload"
             type="file"
             onChange={(e) => handleItemFile(e)}
-            // hidden
           />
         </Button>
         <Input
@@ -185,7 +169,8 @@ export default function DevItemForm(props) {
           <Input
             id="numTokens"
             label="Number of Tokens"
-            placeholder={100}
+            type="number"
+            placeholder={10}
             className={classes.input}
             onChange={(e) => handleItemAmount(e)}
             endAdornment={
@@ -198,7 +183,9 @@ export default function DevItemForm(props) {
           <Button color="primary" type="submit" onClick={() => handleSubmit()}>
             Submit
           </Button>
-          <Button color="secondary" onClick={() => handleToggleAddItems()}>Cancel</Button>
+          <Button color="secondary" onClick={() => handleToggleAddItems()}>
+            Cancel
+          </Button>
         </ButtonGroup>
         <br />
       </FormGroup>
