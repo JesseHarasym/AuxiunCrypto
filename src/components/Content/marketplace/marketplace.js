@@ -23,6 +23,16 @@ export default function ItemList(props) {
     console.log(fetchedData);
   }, []);
 
+  useEffect(async () => {
+    const fetchedData = await fetch(
+      "http://localhost:5000/api/marketplace/assets"
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+    if (Array.isArray(fetchedData)) setItems(fetchedData);
+    console.log(fetchedData);
+  }, [items]);
+
   return (
     <div>
       <Typography variant="h2" className={classes.title}>
