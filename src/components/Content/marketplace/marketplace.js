@@ -34,6 +34,7 @@ export default function ItemList(props) {
           <Item
             key={item.image}
             items={item}
+            setItems={setItems}
             home={props.home}
             user={props.user}
             handleUpdateBalance={props.handleUpdateBalance}

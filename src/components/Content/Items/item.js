@@ -110,6 +110,13 @@ export default function Item(props) {
     });
     // console.log(fetchRes);
     alert("Selling Item: " + tokenId);
+    
+    /////
+    //
+    // this is where we fix the issue of updating page in wallet
+    //
+    /////
+    props.setItem([]);
   };
 
   const handleBuyItem = async (tokenId, isBatch, authKey) => {
@@ -125,6 +132,13 @@ export default function Item(props) {
     );
     console.log(fetchRes);
     alert("Buying Item: " + tokenId);
+
+    /////
+    //
+    // this is where we fix the issue of updating page in marketplace
+    //
+    /////
+    props.setItem([]);
   };
 
   return (

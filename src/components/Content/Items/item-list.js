@@ -18,11 +18,16 @@ export default function ItemList(props) {
 
   return (
     <div>
+      <Typography variant="h2">
+        Wallet
+      </Typography>
+      <br/>
       {items.length ?
         items.map((item) => (
           <Item
             key={item.image}
             items={item}
+            setItems={setItems}
             home={props.home}
             user={props.user}
           />
