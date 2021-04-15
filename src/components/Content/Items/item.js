@@ -24,6 +24,7 @@ const backendHost = "http://localhost:5000";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: "#FFFBF1",
     maxWidth: 300,
     margin: 10
   },
@@ -117,7 +118,7 @@ export default function Item(props) {
     // this is where we fix the issue of updating page in wallet
     //
     /////
-    props.setItem([]);
+    props.setBuySell(!props.buySell);
   };
 
   const handleBuyItem = async (tokenId, authKey) => {
@@ -139,7 +140,7 @@ export default function Item(props) {
     // this is where we fix the issue of updating page in marketplace
     //
     /////
-    props.setItem([]);
+    props.setBuySell(!props.buySell);
 
     alert(fetchRes.msg);
     props.handleUpdateBalance(fetchRes.newBalance);

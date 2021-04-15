@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Item from "./item";
+import Typography from "@material-ui/core/Typography";
 import { fetchUserItems } from "../../../api";
 
 export default function ItemList(props) {
   const [items, setItems] = useState([]);
+  const [buySell, setBuySell] = useState(true);
 
 
   useEffect(() => {
@@ -13,16 +15,16 @@ export default function ItemList(props) {
   }, []);
 
 
-  // useEffect(async () => {
-  //   const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
-  //     headers: { "auth-token": props.user.authKey }
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => data);
-  //   console.log("Fetched data: ", fetchedData);
-  //   if (Array.isArray(fetchedData)) setItems(fetchedData);
-  //   console.log(fetchedData);
-  // }, [items]);
+  useEffect(async () => {
+    const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
+      headers: { "auth-token": props.user.authKey }
+    })
+      .then((res) => res.json())
+      .then((data) => data);
+    console.log("Fetched data: ", fetchedData);
+    if (Array.isArray(fetchedData)) setItems(fetchedData);
+    console.log(fetchedData);
+  }, [buySell]);
 
   return (
     <div>
@@ -38,7 +40,8 @@ export default function ItemList(props) {
           <Item
             key={item.tokenId}
             items={item}
-            setItems={setItems}
+            setBuySell={() => setBuySell()}
+            buySell={buySell}
             home={props.home}
             user={props.user}
           />
