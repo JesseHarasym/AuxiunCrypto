@@ -1,12 +1,8 @@
 const router = require("express").Router();
-// const router = require("./users");
 const erc721 = require("../web3/ERC721_Web3");
 const erc1155 = require("../web3/ERC1155_Web3");
 const AssetsToken = require("../models/assetsTokenSchema.js");
-//const Marketplace = require("../models/marketplaceSchema.js");
-const jwt = require("jsonwebtoken");
 const verify = require("./verify-token");
-
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient("http://localhost:5001");
 
@@ -62,18 +58,20 @@ router.route("/asset/list").post(verify, async (req, res) => {
 router.route("/assets").get((req, res) => {
   // Return all assets listed in the marketplace
   let uri;
+  let batchBalance = null;
   AssetsToken.find({ inmarketplace: true })
     .then(async (assets) => {
-      //TODO grab ipfs URI from the blockchain token id
       const cidList = [];
       if (assets.length > 0) {
         for (let i = 0; i < assets.length; i++) {
-          if (assets.batchtoken == "true") {
+          if (assets[i].batchtoken) {
             uri = await erc1155
               .getTokenURI(assets[i].token)
-              .then((result) => {
-                return result;
-              })
+              .then((result) => result)
+              .catch((err) => res.status(400).json("Error: " + err));
+            batchBalance = await erc1155
+              .getBatchBalance(assets[i].token)
+              .then((result) => result)
               .catch((err) => res.status(400).json("Error: " + err));
           } else {
             uri = await erc721
@@ -83,34 +81,16 @@ router.route("/assets").get((req, res) => {
               })
               .catch((err) => res.status(400).json("Error: " + err));
           }
-
           const tokenObject = await catJson(uri);
           tokenObject.tokenId = assets[i].token;
+          tokenObject.price = assets[i].price;
+          if (batchBalance) tokenObject.batchBalance = batchBalance;
           cidList.push(tokenObject);
         }
       }
-
       res.json(cidList);
     })
     .catch((err) => res.status(400).json(err));
-});
-
-// ? is this necessary
-
-router.route("/add").post((req, res) => {
-  const asset = AssetsToken({
-    token: req.body.token,
-    owner: req.body.owner,
-    inmarketplace: false,
-    price: req.body.price
-  });
-
-  asset.save().then(() =>
-    res.json({
-      success: true,
-      msg: "Successfully added " + asset.token
-    })
-  );
 });
 
 module.exports = router;
