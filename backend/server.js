@@ -32,9 +32,6 @@ app.use("/api/transaction/buy", transactionsRouter);
 app.use("/api/marketplace/", marketplaceRouter);
 app.use("/api/dev/asset", devapiRouter);
 
-const test = require("./routes/test");
-app.use("/test", test);
-
 var server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

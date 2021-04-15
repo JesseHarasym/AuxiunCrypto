@@ -1,7 +1,7 @@
 const Web3 = require("web3"); //Requiring web3.
 const web3 = new Web3("http://localhost:8545"); //Setting the connection either to the currentProvider or Ganache.
 const compiledContract = require("../../build/contracts/GameAssets.json");
-const contract_address = "0x3dED44B62Cbc24534d3e2F2A778dC91c01a0bF07"; //This will be address of the contract on the blockchain. Specific to your local block chain change for testing.
+const contract_address = "0x436D408d3D60006263070A51CC03c6cf5AF71AA7"; //This will be address of the contract on the blockchain. Specific to your local block chain change for testing.
 const abi = compiledContract.abi; //Gets the abi of our compiled contract.
 const contractDetails = new web3.eth.Contract(abi, contract_address); //Allows to access the contracts details (Methods, events, constants, etc.)
 

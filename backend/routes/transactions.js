@@ -100,7 +100,7 @@ router.route("/asset").post(verify, async (req, res) => {
       //If the token is a batch creation we call the erc1155 transfer function.
       //Else the erc721 transfer function.
       if (asset.batchtoken === true) {
-        //If the batch balance is greater than zero go ahead with the purcahse
+        //If the batch balance is greater than zero go ahead with the purchase
         if ((await erc1155.getBatchBalance(asset.token)) > 0) {
           //Grabbing the owner of the batch.
           owner = await erc1155
@@ -228,7 +228,7 @@ router.route("/asset").post(verify, async (req, res) => {
             //send successful response back
             res.json({
               success: true,
-              msg: `Successfully purchased ${asset.token} for ${asset.price}`,
+              msg: `Successfully purchased asset#${asset.token} for ${asset.price} coin`,
               newBalance: updatedCoinBalance
             });
           });
@@ -240,7 +240,7 @@ router.route("/asset").post(verify, async (req, res) => {
             //send successful response back
             res.json({
               success: true,
-              msg: `Successfully purchased ${asset.token} for ${asset.price}`,
+              msg: `Successfully purchased asset#${asset.token} for ${asset.price} coin`,
               newBalance: updatedCoinBalance
             });
           });

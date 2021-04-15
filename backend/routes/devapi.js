@@ -6,7 +6,6 @@ let User = require("../models/userSchema");
 const verify = require("./verify-token");
 
 const ipfsClient = require("ipfs-http-client");
-const { BorderTop } = require("@material-ui/icons");
 const ipfs = ipfsClient("http://localhost:5001");
 
 // Dev adds a new item on the marketplace
@@ -14,14 +13,6 @@ const addJson = async (data) => {
   const jsonAdded = await ipfs.add(JSON.stringify(data));
   return jsonAdded.cid.toString();
 };
-
-// const catJson = async (cid) => {
-//   let stringified = "";
-//   for await (const chunk of ipfs.cat(cid)) {
-//     stringified += chunk.toString();
-//   }
-//   return JSON.parse(stringified);
-// };
 
 router.route("/new").post(verify, async (req, res) => {
   const body = req.body;
@@ -88,13 +79,14 @@ router.route("/new").post(verify, async (req, res) => {
           newAssetCid
         })
       )
-      .catch((err) =>
+      .catch((err) => {
+        console.log(err);
         res.json({
           success: false,
           Error: err
-        })
-      );
-  } else if (multi == "false") {
+        });
+      });
+  } else {
     //Create a single item, returns the tokenID
     const tokenId = await erc721
       .createItem(newAssetCid, user.blockchainAccount)
@@ -125,12 +117,13 @@ router.route("/new").post(verify, async (req, res) => {
           newAssetCid
         })
       )
-      .catch((err) =>
+      .catch((err) => {
+        console.log(err);
         res.json({
           success: false,
           Error: err
-        })
-      );
+        });
+      });
   }
 });
 
@@ -138,31 +131,63 @@ router.route("/new").post(verify, async (req, res) => {
 
 router.route("/verify/:username").get(async (req, res) => {
   const userAccount = await User.findOne({ username: req.params.username })
-    .then((user) => {
-      console.log(user.blockchainAccount);
-      return user.blockchainAccount;
-    })
+    .then((user) => user.blockchainAccount)
     .catch((err) => console.log(err));
 
-  AssetsToken.find({ batchtoken: false })
+  AssetsToken.find()
     .then(async (assets) => {
       const userAssets = [];
-      for (let i = 0; i < assets.length; i++) {
-        const assetOwner = await erc721
-          .ownerOfToken(assets[i].token)
-          .then((result) => result.toLowerCase());
-        if (assetOwner === userAccount) {
-          const assetURI = await erc721
-            .getTokenURI(assets[i].token)
-            .catch((err) => console.log(err));
-          userAssets.push(assetURI);
+      if (assets.length > 0) {
+        for (let i = 0; i < assets.length; i++) {
+          if (assets[i].batchtoken) {
+            const balance = await erc1155.getBalance(
+              assets[i].token,
+              userAccount
+            );
+            if (balance > 0) {
+              const uri = await erc1155
+                .getTokenURI(assets[i].token)
+                .catch((err) => console.log(err));
+              userAssets.push({ id: uri, numOwned: balance });
+            }
+          } else {
+            const assetOwner = await erc721.ownerOfToken(assets[i].token);
+            if (userAccount === assetOwner.toLowerCase()) {
+              const uri = await erc721
+                .getTokenURI(assets[i].token)
+                .catch((err) => console.log(err));
+
+              userAssets.push({ id: uri, numOwned: 1 });
+            }
+          }
         }
       }
-      res.json(userAssets);
+      res.json({
+        user: req.params.username,
+        assets: userAssets
+      });
     })
-    .catch(() =>
-      res.json("Error could not find assets for userId: " + req.params.userId)
-    );
+    .catch((err) => res.status(400).json("Error: " + err));
+
+  // AssetsToken.find({ batchtoken: false })
+  //   .then(async (assets) => {
+  //     const userAssets = [];
+  //     for (let i = 0; i < assets.length; i++) {
+  //       const assetOwner = await erc721
+  //         .ownerOfToken(assets[i].token)
+  //         .then((result) => result.toLowerCase());
+  //       if (assetOwner === userAccount) {
+  //         const assetURI = await erc721
+  //           .getTokenURI(assets[i].token)
+  //           .catch((err) => console.log(err));
+  //         userAssets.push(assetURI);
+  //       }
+  //     }
+  //     res.json(userAssets);
+  //   })
+  //   .catch(() =>
+  //     res.json("Error could not find assets for userId: " + req.params.userId)
+  //   );
 
   // Return all assets owned by the req.params.userID in the assetsToken database
 });

@@ -22,11 +22,11 @@ contract GameAssets is ERC721 {
     function createItem(string memory tokenURI, address creator) public {
         _tokenIds.increment();
 
-        uint256 newItemId = _tokenIds.current();
+        uint256 newItemId = _tokenIds.current() + uint256(5000);
         _mint(creator, newItemId);
         _setTokenURI(newItemId, tokenURI);
 
-        approve(msg.sender, newItemId);//Gives account zero the ability to transfer tokens, this way user will not have to pay gas fees. 
+        approve(msg.sender, newItemId); //Gives account zero the ability to transfer tokens, this way user will not have to pay gas fees.
         emit Minted(creator, newItemId);
     }
 
@@ -51,13 +51,22 @@ contract GameAssets is ERC721 {
     }
 
     //Allows us to transfer a token from one account to another.
-    function safeTransferFrom(address from, address to, uint256 tokenId) public virtual override{
-        require(_exists(tokenId), "ERC721: operator query for nonexistent token");//Checks to make sure the token exists before moving forward.
-        
-        address owner = ERC721.ownerOf(tokenId);//Getting the owner of the token.
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) public virtual override {
+        require(
+            _exists(tokenId),
+            "ERC721: operator query for nonexistent token"
+        ); //Checks to make sure the token exists before moving forward.
 
-        require((msg.sender == owner || _tokenApprovals[tokenId] == msg.sender));//Confirms that the sender is either the owner or an approved account (account zero in our case).
-        approve(msg.sender, tokenId);//Gives account zero the ability to transfer tokens, incase the new owner decides to sell the token again. 
+        address owner = ERC721.ownerOf(tokenId); //Getting the owner of the token.
+
+        require(
+            (msg.sender == owner || _tokenApprovals[tokenId] == msg.sender)
+        ); //Confirms that the sender is either the owner or an approved account (account zero in our case).
+        approve(msg.sender, tokenId); //Gives account zero the ability to transfer tokens, incase the new owner decides to sell the token again.
         _safeTransfer(from, to, tokenId, "");
     }
 

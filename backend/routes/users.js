@@ -142,7 +142,7 @@ router.route("/assets").get(verify, async (req, res) => {
               assets[i].token,
               req.user.pk
             );
-            console.log(balance);
+            //console.log(balance);
             if (balance > 0) {
               const uri = await erc1155
                 .getTokenURI(assets[i].token)

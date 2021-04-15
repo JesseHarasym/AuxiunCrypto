@@ -2,18 +2,25 @@ import React, { useState, useEffect } from "react";
 import Item from "./item";
 import Typography from "@material-ui/core/Typography";
 import { fetchUserItems } from "../../../api";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: 10
+  }
+}));
 
 export default function ItemList(props) {
   const [items, setItems] = useState([]);
   const [buySell, setBuySell] = useState(true);
 
+  const classes = useStyles();
 
   useEffect(() => {
     fetchUserItems(props.user.authKey).then((data) => {
       if (Array.isArray(data)) setItems(data);
     });
   }, []);
-
 
   useEffect(async () => {
     const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
@@ -27,15 +34,11 @@ export default function ItemList(props) {
   }, [buySell]);
 
   return (
-    <div>
-
-      <Typography variant="h2">
-        Wallet
-      </Typography>
-      <br/>
+    <div className={classes.root}>
+      <Typography variant="h2">Wallet</Typography>
+      <br />
 
       {items.length ? (
-
         items.map((item) => (
           <Item
             key={item.tokenId}

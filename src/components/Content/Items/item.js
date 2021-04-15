@@ -112,7 +112,7 @@ export default function Item(props) {
     });
     // console.log(fetchRes);
     alert("Selling Item: " + tokenId);
-    
+
     /////
     //
     // this is where we fix the issue of updating page in wallet
@@ -134,7 +134,6 @@ export default function Item(props) {
     ).then((res) => res.json());
     console.log(fetchRes);
 
-
     /////
     //
     // this is where we fix the issue of updating page in marketplace
@@ -143,8 +142,7 @@ export default function Item(props) {
     props.setBuySell(!props.buySell);
 
     alert(fetchRes.msg);
-    props.handleUpdateBalance(fetchRes.newBalance);
-
+    if (fetchRes.newBalance) props.handleUpdateBalance(fetchRes.newBalance);
   };
 
   return (

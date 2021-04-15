@@ -86,6 +86,7 @@ router.route("/assets").get((req, res) => {
           tokenObject.price = assets[i].price;
           if (batchBalance) tokenObject.batchBalance = batchBalance;
           cidList.push(tokenObject);
+          batchBalance = null;
         }
       }
       res.json(cidList);

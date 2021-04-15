@@ -1,7 +1,10 @@
 .App {
   /*background-color: #f0ebe7;
   background-color: #989898;*/
-  background-color: #cfcfc5;
   width: 100%;
-  height: 200vh;
+  /* height: 200vh; */
+}
+
+body {
+  background-color: #cfcfc5;
 }
