@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemList(props) {
   const classes = useStyles();
   const [items, setItems] = useState([]);
+  const [buySell, setBuySell] = useState(true);
 
   useEffect(async () => {
     const fetchedData = await fetch(
@@ -31,7 +32,7 @@ export default function ItemList(props) {
       .then((data) => data);
     if (Array.isArray(fetchedData)) setItems(fetchedData);
     console.log(fetchedData);
-  }, [items]);
+  }, [buySell]);
 
   return (
     <div>
@@ -44,7 +45,8 @@ export default function ItemList(props) {
           <Item
             key={item.image}
             items={item}
-            setItems={setItems}
+            setBuySell={() => setBuySell()}
+            buySell={buySell}
             home={props.home}
             user={props.user}
             handleUpdateBalance={props.handleUpdateBalance}
