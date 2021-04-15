@@ -5,27 +5,27 @@ import Item from "./item";
 export default function ItemList(props) {
   const [items, setItems] = useState([]);
 
-  useEffect(async () => {
-    const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
-      headers: { "auth-token": props.user.authKey }
-    })
-      .then((res) => res.json())
-      .then((data) => data);
-    console.log("Fetched data: ", fetchedData);
-    if (Array.isArray(fetchedData)) setItems(fetchedData);
-    console.log(fetchedData);
-  }, []);
+  // useEffect(async () => {
+  //   const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
+  //     headers: { "auth-token": props.user.authKey }
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => data);
+  //   console.log("Fetched data: ", fetchedData);
+  //   if (Array.isArray(fetchedData)) setItems(fetchedData);
+  //   console.log(fetchedData);
+  // }, []);
 
-  useEffect(async () => {
-    const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
-      headers: { "auth-token": props.user.authKey }
-    })
-      .then((res) => res.json())
-      .then((data) => data);
-    console.log("Fetched data: ", fetchedData);
-    if (Array.isArray(fetchedData)) setItems(fetchedData);
-    console.log(fetchedData);
-  }, [items]);
+  // useEffect(async () => {
+  //   const fetchedData = await fetch("http://localhost:5000/api/user/assets", {
+  //     headers: { "auth-token": props.user.authKey }
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => data);
+  //   console.log("Fetched data: ", fetchedData);
+  //   if (Array.isArray(fetchedData)) setItems(fetchedData);
+  //   console.log(fetchedData);
+  // }, [items]);
 
   return (
     <div>
