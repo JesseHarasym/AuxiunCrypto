@@ -60,13 +60,18 @@ With the blockchain setup, lets get it started:
 - split open a new powershell then run:
   > geth attach \\.\pipe\geth.ipc
 - then run:
+
   > personal.unlockAccount("0xfe005d002767a320c45f4d2387bdfa1e5134646e","summer2", 0)
+
   (if it looks like nothing copied, try pressing right arrow on your keyboard...)
   You should receive "true" if everything worked
+
 - start mining by running:
+
   > miner.start()
-      You should receive "null"
-      After 10-15 secs you should see in the other powershell window "mined potential block" messages appearing
+
+  You should receive "null"
+  After 10-15 secs you should see in the other powershell window "mined potential block" messages appearing
 
 ### Step 9) migrate the contracts
 
@@ -74,17 +79,23 @@ This is only necessary if you needed to setup a new blockchain in step 7
 
 - open a new powershell and navigate to the root AuxiunCrypto folder
 - install truffle by running:
+
   > npm install truffle -g
+
 - then run:
+
   > truffle migrate
-      After 15-30 secs you should see a summary from truffle similar to: Total deployments: 4; Final cost: 0.14661736 ETH
+
+  After 15-30 secs you should see a summary from truffle similar to: Total deployments: 4; Final cost: 0.14661736 ETH
 
 ### Step 10) start the frontend
 
 - split open another powershell instance... make sure you're at the AuxiunCrypto root folder then
 - run:
+
   > npm start
-      after 10-30s a browser should popup with the front-end
+
+  after 10-30s a browser should popup with the front-end
 
 ### Step 11) start the backend
 
