@@ -61,8 +61,8 @@ With the blockchain setup, lets get it started:
   > geth attach \\.\pipe\geth.ipc
 - then run:
   > personal.unlockAccount("0xfe005d002767a320c45f4d2387bdfa1e5134646e","summer2", 0)
-      (if it looks like nothing copied, try pressing right arrow on your keyboard...)
-      You should receive "true" if everything worked
+  (if it looks like nothing copied, try pressing right arrow on your keyboard...)
+  You should receive "true" if everything worked
 - start mining by running:
   > miner.start()
       You should receive "null"
