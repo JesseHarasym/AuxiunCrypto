@@ -46,7 +46,7 @@ open a new powershell (best to split a new terminal in VSC) and cd to cloned rep
 ### Step 7) get the blockchain setup:
 
 - on the first install you’ll need to setup the keystore and create the blockchain files. This step is only necessary when running for the first time on a new backend client, or anytime the database connection string changes.
-- delete the test_chain folder in /private_blockchain/local_chain
+- delete the test_chain folder in /private_blockchain/local_chain if it exists
 - Open the terminal and navigate to the root folder if not already in it. Run:
   > geth --rpc --rpcport "8545" --datadir private_blockchain/local_chain/test_chain init private_blockchain/local_chain/genesis.json
 - copy the UTC—2021-03-27T… file in /private_blockchain/local_chain/keystoreBackup to the newly created /private_blockchain/local_chain/test_chain/keystore folder
