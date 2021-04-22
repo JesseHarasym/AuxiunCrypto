@@ -11,6 +11,11 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 
+/**
+ * Please configure your Mongo DB connection string in the .env file as per the example
+ */
+
+/*** Connect to DB ***/
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -22,6 +27,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+/*** Attach all the Routers ***/
 const usersRouter = require("./routes/users");
 const transactionsRouter = require("./routes/transactions");
 const marketplaceRouter = require("./routes/marketplace");

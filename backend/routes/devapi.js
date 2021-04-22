@@ -8,12 +8,21 @@ const verify = require("./verify-token");
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient("http://localhost:5001");
 
-// Dev adds a new item on the marketplace
+/**
+ * A helper function that adds a json file to the IPFS
+ *
+ * @param {Object} data - the object to add
+ * @returns - the cid of the newly added object
+ */
 const addJson = async (data) => {
   const jsonAdded = await ipfs.add(JSON.stringify(data));
   return jsonAdded.cid.toString();
 };
 
+/**
+ * Route: /api/dev/asset/new
+ * Adds a new asset to the blockchain, IPFS and database
+ */
 router.route("/new").post(verify, async (req, res) => {
   const body = req.body;
   const multi = req.body.multi;
@@ -127,8 +136,10 @@ router.route("/new").post(verify, async (req, res) => {
   }
 });
 
-// Verify all items owned by a user
-
+/**
+ * Route: /api/dev/asset/verify/:username
+ * Returns a list of all ipfs cids owned by a user
+ */
 router.route("/verify/:username").get(async (req, res) => {
   const userAccount = await User.findOne({ username: req.params.username })
     .then((user) => user.blockchainAccount)
@@ -168,28 +179,6 @@ router.route("/verify/:username").get(async (req, res) => {
       });
     })
     .catch((err) => res.status(400).json("Error: " + err));
-
-  // AssetsToken.find({ batchtoken: false })
-  //   .then(async (assets) => {
-  //     const userAssets = [];
-  //     for (let i = 0; i < assets.length; i++) {
-  //       const assetOwner = await erc721
-  //         .ownerOfToken(assets[i].token)
-  //         .then((result) => result.toLowerCase());
-  //       if (assetOwner === userAccount) {
-  //         const assetURI = await erc721
-  //           .getTokenURI(assets[i].token)
-  //           .catch((err) => console.log(err));
-  //         userAssets.push(assetURI);
-  //       }
-  //     }
-  //     res.json(userAssets);
-  //   })
-  //   .catch(() =>
-  //     res.json("Error could not find assets for userId: " + req.params.userId)
-  //   );
-
-  // Return all assets owned by the req.params.userID in the assetsToken database
 });
 
 module.exports = router;

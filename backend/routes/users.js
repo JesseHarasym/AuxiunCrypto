@@ -11,6 +11,12 @@ const AssetsToken = require("../models/assetsTokenSchema");
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient("http://localhost:5001");
 
+/**
+ * A helper function that retrieves a json file from the IPFS
+ *
+ * @param {String} cid - the file's content id
+ * @returns a stringified JSON object wrapped in a response message
+ */
 const catJson = async (cid) => {
   let stringified = "";
   for await (const chunk of ipfs.cat(cid)) {
@@ -19,7 +25,10 @@ const catJson = async (cid) => {
   return JSON.parse(stringified);
 };
 
-//register a new user
+/**
+ * Route: /api/user/new
+ * Register a new user
+ */
 router.route("/new").post(async (req, res) => {
   //console.log(req.body);
   //VALIDATE THE REGISTERED INFO
@@ -90,7 +99,10 @@ router.route("/new").post(async (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//login
+/**
+ * Route: /api/user/login
+ * Logs in a user
+ */
 router.route("/login").post(async (req, res) => {
   //VALIDATE THE REGISTERED INFO
   console.log("request", req.body);
@@ -122,11 +134,10 @@ router.route("/login").post(async (req, res) => {
     success: true
   };
   res.header("auth-token", token).send(newUser);
-
-  //res.send('Logged in');
 });
 
 /**
+ * Route: /api/user/assets
  * Gets all assets belonging to the currently logged in user
  */
 router.route("/assets").get(verify, async (req, res) => {
@@ -175,7 +186,8 @@ router.route("/assets").get(verify, async (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//! shouldn't the following routes be protected by verify middleware??
+//The following routes have not been implemented by the
+//frontend and also are not protected by verify middleware
 
 // get info for an individual user
 router.route("/:id").get((req, res) => {

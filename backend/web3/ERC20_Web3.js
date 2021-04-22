@@ -1,7 +1,7 @@
 const Web3 = require("web3");
 const web3 = new Web3("http://localhost:8545");
 const compiledContract = require("../../build/contracts/Coin.json");
-const contract_address = "0xDfc45cC17de1Ed0cCff11c9B57a78c44d8233D62";
+const contract_address = "0xe34d47A4919A5f4196E7c2c7c72590cb4490B6b5";
 const abi = compiledContract.abi;
 const contractDetails = new web3.eth.Contract(abi, contract_address);
 

@@ -1,7 +1,7 @@
 const Web3 = require("web3");
 const web3 = new Web3("http://localhost:8545");
 const compiledContract = require("../../build/contracts/MultiToken.json");
-const contract_address = "0x98114018cafc6599DEcEfc72fa2Bee05a0d0Cb1C";
+const contract_address = "0x27F5429Ef5A29C1d7898Ee32Ec0f8f293758Bd53";
 const abi = compiledContract.abi;
 const contractDetails = new web3.eth.Contract(abi, contract_address);
 

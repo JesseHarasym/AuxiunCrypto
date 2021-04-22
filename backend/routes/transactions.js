@@ -6,10 +6,10 @@ const verify = require("./verify-token");
 const User = require("../models/userSchema");
 const AssetsToken = require("../models/assetsTokenSchema");
 
-// Transaction via fiat currency
-// Verify the token in middleware
-// then grab the balance for the user, add the req.body.coinAmount
-// and save the updated balance to the database
+/**
+ * Route: /api/transaction/buy/coin
+ * Adds ERC20 coins to a user's account
+ */
 router.route("/coin/").post(verify, async (req, res) => {
   //Check database for _id
   //_id is contained in req.user which was passed from the token verification
@@ -54,13 +54,10 @@ router.route("/coin/").post(verify, async (req, res) => {
     );
 });
 
-// Buy asset with Auxiun coin
-// First verify auth-token
-// find balance of user with req.user returned from auth-token verify
-// find asset from assetsToken and confirm it is listed on marketplace
-// check price of asset to balance of user, catch error: insufficient funds
-// reduce user balance and save, unlist asset from marketplace and save
-// return asset hash and new balance of user.
+/**
+ * Route: /api/transaction/buy/asset
+ * Allows a user to purchase an ERC721 or ERC1155 token
+ */
 router.route("/asset").post(verify, async (req, res) => {
   const tokenId = req.body.tokenId; //Grabbing the token ID of the item being bought.
 
@@ -80,7 +77,7 @@ router.route("/asset").post(verify, async (req, res) => {
     })
   );
 
-  console.log(asset);
+  //console.log(asset);
 
   //If in marketplace is false the item cannot be sold.
   //Else go ahead with the sale.
